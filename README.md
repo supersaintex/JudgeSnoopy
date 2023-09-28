@@ -1,2 +1,2 @@
-# SerchSnoopy
+# JudgeSnoopy
 Identify Snoopy in your photo
