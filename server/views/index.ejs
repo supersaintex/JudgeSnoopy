@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/css/style.css' />
+</head>
+
+<body>
+  <h1><%= title %></h1>
+  <p>Welcome to <%= title %></p>
+  <form action="/index" method="post" enctype="multipart/form-data">
+    画像ファイル選択<br>
+    <input type="file" name="file">
+    <br>
+    <input type="submit" name="button" value="送信">
+  </form>
+</body>
+
+</html>
+
