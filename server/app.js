@@ -19,8 +19,8 @@ app.use('/index', index);
 var sampleui = require('./routes/sampleui');
 app.use('/sampleui', sampleui);
 
-var runmodel = require('./routes/runmodel');
-app.use('/runmodel', runmodel);
+// var runmodel = require('./routes/runmodel');
+// app.use('/runmodel', runmodel);
 
 // 8080番ポートで待ち受け
 app.listen(8080, () => {
