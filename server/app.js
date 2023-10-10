@@ -5,35 +5,29 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set("view engine", "ejs");
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'))); 
 
-//body-parserモジュールを読み込み初期化する
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
-//HTTPリクエストのボディをjsonで扱えるようになる
 app.use(bodyParser.json());
 
-var index = require('./routes/index');
+// routing
+var index = require('./routes/index'); 
 app.use('/index', index);
 
 var sampleui = require('./routes/sampleui');
 app.use('/sampleui', sampleui);
 
-// var runmodel = require('./routes/runmodel');
-// app.use('/runmodel', runmodel);
-
-// 8080番ポートで待ち受け
+//listen on port 8080
 app.listen(8080, () => {
-  console.log("サーバー起動中");
+  console.log("server is running on port 8080");
 });
 
-//POSTリクエストの作成
+//POST request
 // app.post("/", (req, res) => {
-  //HTTPリクエストのボディを出力
   // console.log(req.body);
-// console.log("POSTリクエストを受け取りました");
+// console.log("get post request");
 // res.end();
 // });
 
-module.exports = app;
-
+module.exports = app; // for testing
