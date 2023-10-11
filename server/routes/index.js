@@ -7,7 +7,8 @@ var path = require('path');
 const tf = require('@tensorflow/tfjs');
 require('@tensorflow/tfjs-node');
 
-var storage = multer.diskStorage({
+// Middleware to upload file
+var storage = multer.diskStorage({ 
   //ファイルの保存先を指定(ここでは保存先は./public/images) 
   destination: function(req, file, cb){
     cb(null, './public/images/')
@@ -21,6 +22,7 @@ var storage = multer.diskStorage({
 var upload = multer({storage: storage})
 
 // GET
+// route '/' is defined in app.js
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
@@ -28,7 +30,7 @@ router.get('/', function(req, res, next) {
 // POST
 router.post('/', upload.single('file'), function(req, res) {
   console.log(req.file);
-  // res.render('image');
+  
   var img = new Canvas.Image();
   img.src = fs.readFileSync(req.file.path);
 
@@ -45,6 +47,7 @@ router.post('/', upload.single('file'), function(req, res) {
   // run model
   let output;
   let result;
+  
   async function prediction() {
     // modelはpublicの下に入れる
     const path_model = 'http://localhost:8080/model/model.json';
@@ -54,20 +57,31 @@ router.post('/', upload.single('file'), function(req, res) {
     console.log(output);
     result = Array.from(output);
     console.log(result[0]);
-    return Number(result[0]);
+    return result[0];
   }
 
-  console.log("before prediction(2)");
-  result = prediction();
+  // console.log("before prediction(2)");
+  // result = prediction();
   // prediction();
-  console.log("after prediction(3)");
+  // console.log("after prediction(3)");
   // console.log(result);
 
-  let data = {};
-  data.resultImg = canvas.toDataURL();
-  data.pred = result;
-  res.render('image', data);
-  console.log("hello(4)");
+  // let data = {};
+  // data.resultImg = canvas.toDataURL();
+  // data.pred = await prediction();
+
+  async function render() {
+    let data = {};
+    data.resultImg = canvas.toDataURL();
+    data.pred = await prediction();
+
+    res.render('image', data);
+  }
+
+  render();
+  // res.render('image', data);
+  // console.log("hello(4)");
+
 });
 
 
