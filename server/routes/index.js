@@ -49,19 +49,25 @@ router.post('/', upload.single('file'), function(req, res) {
     // modelはpublicの下に入れる
     const path_model = 'http://localhost:8080/model/model.json';
     const model = await tf.loadLayersModel(path_model);
-    console.log("model loaded");
+    console.log("model loaded(1)");
     output = await model.predict(tensor_image).data();
     console.log(output);
     result = Array.from(output);
     console.log(result[0]);
+    return Number(result[0]);
   }
 
-  prediction();
+  console.log("before prediction(2)");
+  result = prediction();
+  // prediction();
+  console.log("after prediction(3)");
+  // console.log(result);
 
   let data = {};
   data.resultImg = canvas.toDataURL();
   data.pred = result;
   res.render('image', data);
+  console.log("hello(4)");
 });
 
 
